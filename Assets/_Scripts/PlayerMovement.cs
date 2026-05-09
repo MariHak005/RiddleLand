@@ -18,10 +18,10 @@ public class PlayerMovement : MonoBehaviour
 
     bool isGrounded;
 
-    // Update is called once per frame
+    
     void Update()
     {
-        //checking if we hit the ground to reset our falling velocity, otherwise we will fall faster the next time
+      
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
         if (isGrounded && velocity.y < 0)
@@ -31,16 +31,21 @@ public class PlayerMovement : MonoBehaviour
 
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
+        bool isRunning = Input.GetKey(KeyCode.LeftShift);
 
-        //right is the red Axis, foward is the blue axis
+       
+
+        
         Vector3 move = transform.right * x + transform.forward * z;
 
-        controller.Move(move * speed * Time.deltaTime);
+        float currentSpeed = isRunning ? speed * 1.5f : speed;
 
-        //check if the player is on the ground so he can jump
+        controller.Move(move * currentSpeed * Time.deltaTime);
+
+
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
-            //the equation for jumping
+           
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
 
