@@ -14,14 +14,14 @@ public class PlayerMovement : MonoBehaviour
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
 
-    Vector3 velocity;
+    public AudioSource footstepAudio;
+    public AudioSource jumpAudio;
 
+    Vector3 velocity;
     bool isGrounded;
 
-    
     void Update()
     {
-      
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
         if (isGrounded && velocity.y < 0)
@@ -33,20 +33,34 @@ public class PlayerMovement : MonoBehaviour
         float z = Input.GetAxis("Vertical");
         bool isRunning = Input.GetKey(KeyCode.LeftShift);
 
-       
-
-        
         Vector3 move = transform.right * x + transform.forward * z;
 
         float currentSpeed = isRunning ? speed * 1.5f : speed;
 
         controller.Move(move * currentSpeed * Time.deltaTime);
 
+        bool isMoving = (x != 0 || z != 0) && isGrounded;
+
+        if (isMoving)
+        {
+            if (!footstepAudio.isPlaying)
+            {
+                footstepAudio.Play();
+            }
+        }
+        else
+        {
+            footstepAudio.Stop();
+        }
 
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
-           
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+
+            if (jumpAudio != null)
+            {
+                jumpAudio.Play();
+            }
         }
 
         velocity.y += gravity * Time.deltaTime;
