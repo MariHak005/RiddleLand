@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 3
   tags:
   - Ground
+  - Coin
+  - Key
+  - Keys
   layers:
   - Default
   - TransparentFX

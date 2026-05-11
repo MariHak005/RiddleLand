@@ -13,6 +13,13 @@ public class ChestTrigger : MonoBehaviour
     public GameObject wrongAnswer;
     public GameObject correctAnswer;
     public GameObject SpecialKeysPanel;
+    public GameObject KeyCounterBar;
+
+    public GameObject keyInsideChest;
+
+    public GameObject portal;
+    public int keysNeededToWin = 4;
+
     public AudioClip openSound;
 
     public TextMeshProUGUI RiddleText;
@@ -21,6 +28,7 @@ public class ChestTrigger : MonoBehaviour
     public TextMeshProUGUI btnCText;
     public TextMeshProUGUI btnDText;
     public TextMeshProUGUI keyCountText;
+
     public static int specialKeyCount = 0;
     private bool isOpening = false;
 
@@ -31,18 +39,37 @@ public class ChestTrigger : MonoBehaviour
     {
         animator = GetComponentInChildren<Animator>();
         audioSource = GetComponent<AudioSource>();
+
         ChestUI.SetActive(false);
         wrongAnswer.SetActive(false);
 
+        if (correctAnswer != null)
+            correctAnswer.SetActive(false);
+
+        if (keyInsideChest != null)
+            keyInsideChest.SetActive(false);
+
+        if (portal != null)
+            portal.SetActive(false);
+
+        if (keyCountText != null)
+            keyCountText.text = "x " + specialKeyCount.ToString();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player" && !isOpening) 
+        if (other.gameObject.tag == "Player" && !isOpening)
         {
-            isOpening = true; // Close the gate
+            isOpening = true;
+
             animator.SetBool("isOpen", true);
-            audioSource.PlayOneShot(openSound);
+
+            if (audioSource != null && openSound != null)
+                audioSource.PlayOneShot(openSound);
+
+            if (keyInsideChest != null)
+                keyInsideChest.SetActive(true);
+
             StartCoroutine(ShowUI());
         }
     }
@@ -50,14 +77,21 @@ public class ChestTrigger : MonoBehaviour
     private IEnumerator ShowUI()
     {
         yield return new WaitForSeconds(2f);
-        if (ChestUI != null) ChestUI.SetActive(true);
-        if (SpecialKeysPanel != null) SpecialKeysPanel.SetActive(false);
+
+        if (ChestUI != null)
+            ChestUI.SetActive(true);
+
+        if (SpecialKeysPanel != null)
+            SpecialKeysPanel.SetActive(false);
+
+        if (KeyCounterBar != null)
+            KeyCounterBar.SetActive(false);
+
         DisplayRandomRiddle();
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
-
 
     void DisplayRandomRiddle()
     {
@@ -71,13 +105,12 @@ public class ChestTrigger : MonoBehaviour
             btnBText.text = currentRiddle.optionB;
             btnCText.text = currentRiddle.optionC;
             btnDText.text = currentRiddle.optionD;
-            
         }
     }
 
     public void AnswerA()
     {
-        if (currentRiddle.correctAnswerIndex == 0) Win(); 
+        if (currentRiddle.correctAnswerIndex == 0) Win();
         else Wrong();
     }
 
@@ -89,10 +122,11 @@ public class ChestTrigger : MonoBehaviour
 
     public void AnswerC()
     {
-        if (currentRiddle.correctAnswerIndex == 2) Win(); 
+        if (currentRiddle.correctAnswerIndex == 2) Win();
         else Wrong();
     }
-    public void AnswerD() 
+
+    public void AnswerD()
     {
         if (currentRiddle.correctAnswerIndex == 3) Win();
         else Wrong();
@@ -101,18 +135,26 @@ public class ChestTrigger : MonoBehaviour
     void Win()
     {
         if (correctAnswer != null)
-        {
             correctAnswer.SetActive(true);
-        }
 
         specialKeyCount++;
+
         if (keyCountText != null)
+            keyCountText.text = "x " + specialKeyCount.ToString();
+
+        if (specialKeyCount >= keysNeededToWin)
         {
-            keyCountText.text = "Special Keys: " + specialKeyCount;
+            if (portal != null)
+                portal.SetActive(true);
         }
 
         ChestUI.SetActive(false);
-        if (SpecialKeysPanel != null) SpecialKeysPanel.SetActive(true);
+
+        if (SpecialKeysPanel != null)
+            SpecialKeysPanel.SetActive(true);
+
+        if (KeyCounterBar != null)
+            KeyCounterBar.SetActive(true);
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -124,19 +166,20 @@ public class ChestTrigger : MonoBehaviour
     private IEnumerator HideWinPanel()
     {
         yield return new WaitForSeconds(3f);
+
         if (correctAnswer != null)
-        {
             correctAnswer.SetActive(false);
-        }
     }
+
     void Wrong()
     {
         wrongAnswer.SetActive(true);
     }
+
     public void TryAgain()
     {
-        wrongAnswer.SetActive(false); 
-        ChestUI.SetActive(true);       
+        wrongAnswer.SetActive(false);
+        ChestUI.SetActive(true);
     }
 }
 
