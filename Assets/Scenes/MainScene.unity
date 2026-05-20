@@ -6860,7 +6860,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2001021735}
         m_TargetAssemblyTypeName: ChestTrigger, Assembly-CSharp
         m_MethodName: AnswerD
         m_Mode: 1
@@ -10150,7 +10150,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2001021735}
         m_TargetAssemblyTypeName: ChestTrigger, Assembly-CSharp
         m_MethodName: AnswerC
         m_Mode: 1
@@ -11256,7 +11256,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2001021735}
         m_TargetAssemblyTypeName: ChestTrigger, Assembly-CSharp
         m_MethodName: AnswerA
         m_Mode: 1
@@ -13635,7 +13635,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2001021735}
         m_TargetAssemblyTypeName: ChestTrigger, Assembly-CSharp
         m_MethodName: AnswerB
         m_Mode: 1
