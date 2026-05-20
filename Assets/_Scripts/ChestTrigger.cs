@@ -13,12 +13,8 @@ public class ChestTrigger : MonoBehaviour
     public GameObject wrongAnswer;
     public GameObject correctAnswer;
     public GameObject SpecialKeysPanel;
-    public GameObject KeyCounterBar;
 
     public GameObject keyInsideChest;
-
-    public GameObject portal;
-    public int keysNeededToWin = 4;
 
     public AudioClip openSound;
 
@@ -48,12 +44,6 @@ public class ChestTrigger : MonoBehaviour
 
         if (keyInsideChest != null)
             keyInsideChest.SetActive(false);
-
-        if (portal != null)
-            portal.SetActive(false);
-
-        if (keyCountText != null)
-            keyCountText.text = "x " + specialKeyCount.ToString();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -83,9 +73,6 @@ public class ChestTrigger : MonoBehaviour
 
         if (SpecialKeysPanel != null)
             SpecialKeysPanel.SetActive(false);
-
-        if (KeyCounterBar != null)
-            KeyCounterBar.SetActive(false);
 
         DisplayRandomRiddle();
 
@@ -142,19 +129,10 @@ public class ChestTrigger : MonoBehaviour
         if (keyCountText != null)
             keyCountText.text = "x " + specialKeyCount.ToString();
 
-        if (specialKeyCount >= keysNeededToWin)
-        {
-            if (portal != null)
-                portal.SetActive(true);
-        }
-
         ChestUI.SetActive(false);
 
         if (SpecialKeysPanel != null)
             SpecialKeysPanel.SetActive(true);
-
-        if (KeyCounterBar != null)
-            KeyCounterBar.SetActive(true);
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
