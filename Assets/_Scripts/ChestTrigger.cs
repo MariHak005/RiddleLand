@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 using TMPro;
 using System.Collections.Generic;
+using StarterAssets;
 
 public class ChestTrigger : MonoBehaviour
 {
@@ -15,6 +16,10 @@ public class ChestTrigger : MonoBehaviour
     public GameObject SpecialKeysPanel;
 
     public GameObject keyInsideChest;
+
+    public ThirdPersonController playerController;
+    public Animator playerAnimator;
+    public AudioSource footstepAudio;
 
     public AudioClip openSound;
 
@@ -50,6 +55,18 @@ public class ChestTrigger : MonoBehaviour
     {
         if (other.gameObject.tag == "Player" && !isOpening)
         {
+            if (playerController != null)
+                playerController.enabled = false;
+
+            if (playerAnimator != null)
+            {
+                playerAnimator.SetFloat("Speed", 0f);
+                playerAnimator.SetFloat("MotionSpeed", 0f);
+            }
+
+            if (footstepAudio != null)
+                footstepAudio.Stop();
+
             isOpening = true;
 
             animator.SetBool("isOpen", true);
@@ -133,6 +150,9 @@ public class ChestTrigger : MonoBehaviour
 
         if (SpecialKeysPanel != null)
             SpecialKeysPanel.SetActive(true);
+
+        if (playerController != null)
+            playerController.enabled = true;
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;

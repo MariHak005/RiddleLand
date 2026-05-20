@@ -1105,6 +1105,9 @@ MonoBehaviour:
   correctAnswer: {fileID: 1666917539}
   SpecialKeysPanel: {fileID: 1911686754}
   keyInsideChest: {fileID: 708277983}
+  playerController: {fileID: 1039549761}
+  playerAnimator: {fileID: 1039549763}
+  footstepAudio: {fileID: 1039549764}
   openSound: {fileID: 8300000, guid: 719b631e35e19bb448c922dac1daafa0, type: 3}
   RiddleText: {fileID: 830047011}
   btnAText: {fileID: 1324876895}
@@ -1526,6 +1529,9 @@ MonoBehaviour:
   correctAnswer: {fileID: 1666917539}
   SpecialKeysPanel: {fileID: 1911686754}
   keyInsideChest: {fileID: 111683974}
+  playerController: {fileID: 1039549761}
+  playerAnimator: {fileID: 1039549763}
+  footstepAudio: {fileID: 1039549764}
   openSound: {fileID: 8300000, guid: 719b631e35e19bb448c922dac1daafa0, type: 3}
   RiddleText: {fileID: 1217266016}
   btnAText: {fileID: 1572433238}
@@ -2496,7 +2502,7 @@ RectTransform:
   m_GameObject: {fileID: 318690419}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.2, y: 0.4, z: 0}
+  m_LocalScale: {x: 0.93336004, y: 0.384444, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 565423022}
@@ -2505,8 +2511,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -107, y: -12}
-  m_SizeDelta: {x: 380, y: 250}
+  m_AnchoredPosition: {x: 23.6, y: -21.556}
+  m_SizeDelta: {x: 220, y: 200}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &318690421
 MonoBehaviour:
@@ -2528,7 +2534,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: dc0488d5cb1fb7f4abf1f9516981d481, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c479c18a422bea5429818253227d595e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3540,15 +3546,15 @@ RectTransform:
   m_GameObject: {fileID: 565423021}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.6, y: 1, z: 1}
+  m_LocalScale: {x: 0.45258, y: 0.9352, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 318690420}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -39, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: -57.3, y: 0}
+  m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &565423023
 MonoBehaviour:
@@ -3571,7 +3577,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 58b0c8af4e06f6c439bdfac7654663b2, type: 3}
-  m_Type: 0
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -3965,7 +3971,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409503, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 305.97488
+      value: 306.00488
       objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409503, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3973,7 +3979,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409503, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.5565691
+      value: 1.4965692
       objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409503, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -6017,7 +6023,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1dc898202e7fa3f46805926af356f40e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.25
+      value: 0.55
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1dc898202e7fa3f46805926af356f40e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -6803,6 +6809,22 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3893294197879345259, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
   m_PrefabInstance: {fileID: 1776485750}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1039549761 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4416926081852918490, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
+  m_PrefabInstance: {fileID: 1776485750}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1039549756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26e54e5a728a9234ab24fcf1460ed8a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!95 &1039549763 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 6982812146204527121, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
+  m_PrefabInstance: {fileID: 1776485750}
+  m_PrefabAsset: {fileID: 0}
 --- !u!82 &1039549764
 AudioSource:
   m_ObjectHideFlags: 0
@@ -6815,10 +6837,10 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 158bf87f797758741acaf8ca4f07fa08, type: 3}
-  m_PlayOnAwake: 0
+  m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -8049,7 +8071,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2070925441746177912, guid: a1a802ecaf6775746bb2a929fb554ad8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 305.97488
+      value: 306.00488
       objectReference: {fileID: 0}
     - target: {fileID: 2070925441746177912, guid: a1a802ecaf6775746bb2a929fb554ad8, type: 3}
       propertyPath: m_LocalPosition.y
@@ -8057,7 +8079,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2070925441746177912, guid: a1a802ecaf6775746bb2a929fb554ad8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.5565691
+      value: 1.4965692
       objectReference: {fileID: 0}
     - target: {fileID: 2070925441746177912, guid: a1a802ecaf6775746bb2a929fb554ad8, type: 3}
       propertyPath: m_LocalRotation.w
@@ -10659,7 +10681,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3893294197879345259, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 304
+      value: 304.03
       objectReference: {fileID: 0}
     - target: {fileID: 3893294197879345259, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
       propertyPath: m_LocalPosition.y
@@ -10667,7 +10689,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3893294197879345259, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5.44
+      value: 5.38
       objectReference: {fileID: 0}
     - target: {fileID: 3893294197879345259, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
       propertyPath: m_LocalRotation.w
@@ -11329,6 +11351,9 @@ MonoBehaviour:
   correctAnswer: {fileID: 1666917539}
   SpecialKeysPanel: {fileID: 1911686754}
   keyInsideChest: {fileID: 216318781}
+  playerController: {fileID: 1039549761}
+  playerAnimator: {fileID: 1039549763}
+  footstepAudio: {fileID: 1039549764}
   openSound: {fileID: 8300000, guid: 719b631e35e19bb448c922dac1daafa0, type: 3}
   RiddleText: {fileID: 1135473685}
   btnAText: {fileID: 1225383751}
@@ -11531,11 +11556,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2096029226}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 4, y: 0}
-  m_SizeDelta: {x: 1074, y: 489}
-  m_Pivot: {x: 0, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 884, y: 282}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1911686756
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11549,14 +11574,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: dc0488d5cb1fb7f4abf1f9516981d481, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c479c18a422bea5429818253227d595e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -11907,6 +11932,9 @@ MonoBehaviour:
   correctAnswer: {fileID: 1666917539}
   SpecialKeysPanel: {fileID: 1911686754}
   keyInsideChest: {fileID: 1572217183}
+  playerController: {fileID: 1039549761}
+  playerAnimator: {fileID: 1039549763}
+  footstepAudio: {fileID: 1039549764}
   openSound: {fileID: 8300000, guid: 719b631e35e19bb448c922dac1daafa0, type: 3}
   RiddleText: {fileID: 1135473685}
   btnAText: {fileID: 1225383751}
