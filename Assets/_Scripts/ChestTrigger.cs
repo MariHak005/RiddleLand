@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections;
-using UnityEngine.SceneManagement;
 using TMPro;
 using System.Collections.Generic;
 using StarterAssets;
@@ -14,6 +13,8 @@ public class ChestTrigger : MonoBehaviour
     public GameObject wrongAnswer;
     public GameObject correctAnswer;
     public GameObject SpecialKeysPanel;
+
+    public GameObject minimapUI;
 
     public GameObject keyInsideChest;
 
@@ -31,30 +32,59 @@ public class ChestTrigger : MonoBehaviour
     public TextMeshProUGUI keyCountText;
 
     public static int specialKeyCount = 0;
+
+    [Header("Portal Settings")]
+    public int keysNeededToOpenPortal = 8;
+    public GameObject portal;
+    public GameObject portalOpenedPanel;
+    public AudioClip portalOpeningSound;
+
+    private static bool portalAlreadyOpened = false;
+
     private bool isOpening = false;
+    private bool isCompleted = false;
 
     public List<Riddle> riddleList;
     private Riddle currentRiddle;
+
+    private static ChestTrigger activeChest;
 
     void Start()
     {
         animator = GetComponentInChildren<Animator>();
         audioSource = GetComponent<AudioSource>();
 
-        ChestUI.SetActive(false);
-        wrongAnswer.SetActive(false);
+        if (ChestUI != null)
+            ChestUI.SetActive(false);
+
+        if (wrongAnswer != null)
+            wrongAnswer.SetActive(false);
 
         if (correctAnswer != null)
             correctAnswer.SetActive(false);
 
         if (keyInsideChest != null)
             keyInsideChest.SetActive(false);
+
+        if (keyCountText != null)
+            keyCountText.text = "x " + specialKeyCount.ToString();
+
+        if (portal != null && !portalAlreadyOpened)
+            portal.SetActive(false);
+
+        if (portalOpenedPanel != null && !portalAlreadyOpened)
+            portalOpenedPanel.SetActive(false);
+
+        if (minimapUI != null)
+            minimapUI.SetActive(true);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player" && !isOpening)
+        if (other.gameObject.CompareTag("Player") && !isOpening && !isCompleted)
         {
+            activeChest = this;
+
             if (playerController != null)
                 playerController.enabled = false;
 
@@ -69,7 +99,8 @@ public class ChestTrigger : MonoBehaviour
 
             isOpening = true;
 
-            animator.SetBool("isOpen", true);
+            if (animator != null)
+                animator.SetBool("isOpen", true);
 
             if (audioSource != null && openSound != null)
                 audioSource.PlayOneShot(openSound);
@@ -91,6 +122,12 @@ public class ChestTrigger : MonoBehaviour
         if (SpecialKeysPanel != null)
             SpecialKeysPanel.SetActive(false);
 
+        if (wrongAnswer != null)
+            wrongAnswer.SetActive(false);
+
+        if (minimapUI != null)
+            minimapUI.SetActive(false);
+
         DisplayRandomRiddle();
 
         Cursor.lockState = CursorLockMode.None;
@@ -99,41 +136,76 @@ public class ChestTrigger : MonoBehaviour
 
     void DisplayRandomRiddle()
     {
-        if (riddleList.Count > 0)
+        if (riddleList == null || riddleList.Count == 0)
         {
-            int randomIndex = Random.Range(0, riddleList.Count);
-            currentRiddle = riddleList[randomIndex];
-
-            RiddleText.text = currentRiddle.question;
-            btnAText.text = currentRiddle.optionA;
-            btnBText.text = currentRiddle.optionB;
-            btnCText.text = currentRiddle.optionC;
-            btnDText.text = currentRiddle.optionD;
+            Debug.LogWarning(gameObject.name + " has no riddles in Riddle List.");
+            currentRiddle = null;
+            return;
         }
+
+        int randomIndex = Random.Range(0, riddleList.Count);
+        currentRiddle = riddleList[randomIndex];
+
+        if (RiddleText != null)
+            RiddleText.text = currentRiddle.question;
+
+        if (btnAText != null)
+            btnAText.text = currentRiddle.optionA;
+
+        if (btnBText != null)
+            btnBText.text = currentRiddle.optionB;
+
+        if (btnCText != null)
+            btnCText.text = currentRiddle.optionC;
+
+        if (btnDText != null)
+            btnDText.text = currentRiddle.optionD;
     }
 
     public void AnswerA()
     {
-        if (currentRiddle.correctAnswerIndex == 0) Win();
-        else Wrong();
+        if (activeChest != null)
+            activeChest.CheckAnswer(0);
+        else
+            CheckAnswer(0);
     }
 
     public void AnswerB()
     {
-        if (currentRiddle.correctAnswerIndex == 1) Win();
-        else Wrong();
+        if (activeChest != null)
+            activeChest.CheckAnswer(1);
+        else
+            CheckAnswer(1);
     }
 
     public void AnswerC()
     {
-        if (currentRiddle.correctAnswerIndex == 2) Win();
-        else Wrong();
+        if (activeChest != null)
+            activeChest.CheckAnswer(2);
+        else
+            CheckAnswer(2);
     }
 
     public void AnswerD()
     {
-        if (currentRiddle.correctAnswerIndex == 3) Win();
-        else Wrong();
+        if (activeChest != null)
+            activeChest.CheckAnswer(3);
+        else
+            CheckAnswer(3);
+    }
+
+    void CheckAnswer(int answerIndex)
+    {
+        if (currentRiddle == null)
+        {
+            Debug.LogWarning(gameObject.name + ": No riddle selected. Check Riddle List.");
+            return;
+        }
+
+        if (currentRiddle.correctAnswerIndex == answerIndex)
+            Win();
+        else
+            Wrong();
     }
 
     void Win()
@@ -146,10 +218,19 @@ public class ChestTrigger : MonoBehaviour
         if (keyCountText != null)
             keyCountText.text = "x " + specialKeyCount.ToString();
 
-        ChestUI.SetActive(false);
+        if (ChestUI != null)
+            ChestUI.SetActive(false);
 
         if (SpecialKeysPanel != null)
             SpecialKeysPanel.SetActive(true);
+
+        if (specialKeyCount >= keysNeededToOpenPortal)
+        {
+            OpenPortal();
+        }
+
+        if (minimapUI != null)
+            minimapUI.SetActive(true);
 
         if (playerController != null)
             playerController.enabled = true;
@@ -157,8 +238,29 @@ public class ChestTrigger : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
+        isCompleted = true;
+        activeChest = null;
+
         StartCoroutine(HideWinPanel());
+
         enabled = false;
+    }
+
+    void OpenPortal()
+    {
+        if (portalAlreadyOpened)
+            return;
+
+        portalAlreadyOpened = true;
+
+        if (portal != null)
+            portal.SetActive(true);
+
+        if (portalOpenedPanel != null)
+            portalOpenedPanel.SetActive(true);
+
+        if (audioSource != null && portalOpeningSound != null)
+            audioSource.PlayOneShot(portalOpeningSound);
     }
 
     private IEnumerator HideWinPanel()
@@ -171,13 +273,26 @@ public class ChestTrigger : MonoBehaviour
 
     void Wrong()
     {
-        wrongAnswer.SetActive(true);
+        if (wrongAnswer != null)
+            wrongAnswer.SetActive(true);
+
+        if (ChestUI != null)
+            ChestUI.SetActive(false);
+
+        if (minimapUI != null)
+            minimapUI.SetActive(false);
     }
 
     public void TryAgain()
     {
-        wrongAnswer.SetActive(false);
-        ChestUI.SetActive(true);
+        if (wrongAnswer != null)
+            wrongAnswer.SetActive(false);
+
+        if (ChestUI != null)
+            ChestUI.SetActive(true);
+
+        if (minimapUI != null)
+            minimapUI.SetActive(false);
     }
 }
 
